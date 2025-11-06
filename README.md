@@ -1,47 +1,64 @@
 # 🔐 RC4 vs AES vs DES – Performance Comparison (Python)
 
-This project implements **RC4**, **AES (CTR)**, and **DES (CTR)** encryption in Python and compares their performance on small and large data sizes.  
-It is perfect for academic submissions, benchmarking studies, and cryptography learning.
+This project implements and benchmarks three cryptographic algorithms:
+
+- **RC4** (via optimized C-based `arc4` library)
+- **AES (CTR Mode)** using PyCryptodome
+- **DES (CTR Mode)** using PyCryptodome
+
+It compares performance on small (~12 KB) and large (2 MB) data sizes.  
+This project is suitable for academic submissions, demonstrations, and cryptography learning.
 
 ---
 
 ## ✅ Features
 
-- ✔ **Optimized pure-Python RC4 implementation**  
-- ✔ **AES & DES using PyCryptodome**  
-- ✔ **CTR mode for fair comparison**  
-- ✔ **Benchmarks on small (~12 KB) and large (~2 MB) data**  
-- ✔ **Performance analysis output**  
-- ✔ **PDF report included**  
+- ✅ Fast RC4 implementation using the **arc4** C library  
+- ✅ AES-CTR and DES-CTR using PyCryptodome  
+- ✅ Fair benchmarking using Python `time` module  
+- ✅ Covers both small and large data cases  
+- ✅ Includes PDF report template  
+- ✅ Simple and clean codebase  
 
 ---
 
 ## 📌 Algorithms Overview
 
 ### 🔸 RC4 (Stream Cipher)
-- Lightweight, simple operations (swap, XOR)
-- Fast on small data
-- Slows down for large data in Python due to interpreter overhead
-- Cryptographically broken — NOT used in modern systems
+- Implemented using optimized C extension (`arc4`)
+- Very fast for small data
+- Slower on very large data compared to AES (because AES uses hardware acceleration)
+- Cryptographically insecure today
 
 ### 🔸 AES (CTR Mode)
-- Modern, secure cipher
-- Hardware-accelerated via **AES-NI** on most CPUs
-- Extremely fast on large data
-- Industry standard
+- Industry standard encryption algorithm
+- Uses **AES-NI** hardware acceleration on modern CPUs
+- Fastest for large data
+- Strong security and widely used
 
 ### 🔸 DES (CTR Mode)
-- Historical block cipher
-- 56-bit key: insecure today  
-- Implemented in software → slowest performance
+- Historical block cipher (56-bit key)
+- Slower due to no hardware acceleration
+- Considered insecure today
 
 ---
 
 ## 📦 Installation
 
-Make sure Python 3 is installed.
+Install dependencies:
+pip install pycryptodome arc4
 
-Install required libraries:
 
-```bash
-pip install pycryptodome
+Running the Benchmark:
+python CCS.py
+
+
+=== RESULTS ===
+Algorithm Size Time (s)
+RC4 | 12 KB | 0.0009
+AES-CTR | 12 KB | 0.02045
+DES-CTR | 12 KB | 0.00099
+
+RC4 | 2 MB | 0.01211
+AES-CTR | 2 MB | 0.00527
+DES-CTR | 2 MB | 0.05569
