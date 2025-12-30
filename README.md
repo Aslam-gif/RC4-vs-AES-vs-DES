@@ -1,49 +1,58 @@
-# 🔐 RC4 vs AES vs DES – Performance Comparison (Python)
+RC4, AES, and DES Performance Comparison Report:
 
-This project implements and benchmarks three cryptographic algorithms:
+Aslam Siddhiq A,
+3rd Year CSE student
 
-- **RC4** (via optimized C-based `arc4` library)
-- **AES (CTR Mode)** using PyCryptodome
-- **DES (CTR Mode)** using PyCryptodome
+1. Introduction
+This updated report includes encryption and decryption timings for RC4 (arc4 optimized),
+AES-CTR, and DES-CTR. Large data blocks of 5 MB and 25 MB were used, as requested.
 
-It compares performance on small (~12 KB) and large (2 MB) data sizes.  
-This project is suitable for academic submissions, demonstrations, and cryptography learning.
 
----
+2. Algorithms Overview
+- RC4 (arc4): Stream cipher implemented as a C extension for high speed.
+- AES-CTR: Modern secure cipher using hardware acceleration (AES-NI).
+- DES-CTR: Old, insecure cipher; slow and purely software-based.
 
-## ✅ Features
 
-- ✅ Fast RC4 implementation using the **arc4** C library  
-- ✅ AES-CTR and DES-CTR using PyCryptodome  
-- ✅ Fair benchmarking using Python `time` module  
-- ✅ Covers both small and large data cases  
-- ✅ Includes PDF report template  
-- ✅ Simple and clean codebase  
+3. Methodology
+Two large random test blocks were used:
+- 5 MB block
+- 25 MB block
+Both encryption and decryption phases were benchmarked using timing functions.
 
----
 
-## 📌 Algorithms Overview
+4. Benchmark Table:
+--- Testing Block Size: 5 MB ---
+RC4 | Encrypt: 0.0086s | Decrypt: 0.0089s
+AES-CTR | Encrypt: 0.0118s | Decrypt: 0.0061s
+DES-CTR | Encrypt: 0.0976s | Decrypt: 0.0729s
 
-### 🔸 RC4 (Stream Cipher)
-- Implemented using optimized C extension (`arc4`)
-- Very fast for small data
-- Slower on very large data compared to AES (because AES uses hardware acceleration)
-- Cryptographically insecure today
+--- Testing Block Size: 25 MB ---
+RC4 | Encrypt: 0.0421s | Decrypt: 0.0459s
+AES-CTR | Encrypt: 0.0343s | Decrypt: 0.0290s
+DES-CTR | Encrypt: 0.3000s | Decrypt: 0.2876s
 
-### 🔸 AES (CTR Mode)
-- Industry standard encryption algorithm
-- Uses **AES-NI** hardware acceleration on modern CPUs
-- Fastest for large data
-- Strong security and widely used
 
-### 🔸 DES (CTR Mode)
-- Historical block cipher (56-bit key)
-- Slower due to no hardware acceleration
-- Considered insecure today
+5. Analysis
+- RC4 performs very fast on medium data but slows for very large blocks.
+- AES-CTR remains the fastest due to CPU-level AES-NI acceleration.
+- DES-CTR is consistently the slowest because of outdated design and software-only execution.
 
----
 
-## 📦 Installation
+6. Conclusion
+AES is the best-performing and most secure option. RC4 is moderately fast but insecure.
+DES is outdated and slow. Large-block tests clearly show the advantage of hardware-backed
+cryptographic algorithms like AES.
+
+
+7. Notes
+This benchmark highlights how algorithm complexity and hardware support influence real-world
+performance.
+
+Output:
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/983d51a8-f97c-41e0-a7f6-8585cfdae61a" />
+
+
 
 Install dependencies:
 pip install pycryptodome arc4
@@ -53,12 +62,13 @@ Running the Benchmark:
 python CCS.py
 
 
-=== RESULTS ===
-Algorithm Size Time (s)
-RC4 | 12 KB | 0.0009
-AES-CTR | 12 KB | 0.02045
-DES-CTR | 12 KB | 0.00099
+Result:
+RC4 performs better on small datasets but lags behind AES on large datasets due to Python
+interpretation overhead.
+AES remains the fastest and most secure due to hardware acceleration.
+DES demonstrates the slowest performance and is insecure for modern cryptographic use.
 
-RC4 | 2 MB | 0.01211
-AES-CTR | 2 MB | 0.00527
-DES-CTR | 2 MB | 0.05569
+
+
+
+
